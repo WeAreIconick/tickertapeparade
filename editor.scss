@@ -1,0 +1,57 @@
+
+  /**
+ * The following styles get applied inside the editor only.
+ */
+
+.wp-block-telex-ticker-tape-parade {
+	border: 1px dashed #ccc;
+	position: relative;
+
+	.ticker-preview-note {
+		position: absolute;
+		top: 4px;
+		right: 8px;
+		font-size: 11px;
+		color: rgba(255, 255, 255, 0.7);
+		background: rgba(0, 0, 0, 0.3);
+		padding: 2px 6px;
+		border-radius: 3px;
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.ticker-content {
+		// Slower animation in editor for preview
+		animation-duration: 20s !important;
+	}
+
+	// Make sure the editor preview is visible
+	.ticker-container {
+		min-height: 40px;
+		display: flex;
+		align-items: center;
+	}
+
+	// Editor-specific hover states
+	&:hover {
+		border-color: #007cba;
+	}
+
+	&.is-selected {
+		border-color: #007cba;
+		border-style: solid;
+	}
+}
+
+// Inspector controls styling
+.components-panel__body {
+	.components-base-control__label {
+		font-weight: 600;
+		margin-bottom: 8px;
+	}
+
+	.components-color-picker {
+		margin-bottom: 16px;
+	}
+}
+	

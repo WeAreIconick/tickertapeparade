@@ -1,0 +1,161 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+
+.wp-block-telex-ticker-tape-parade {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	white-space: nowrap;
+	padding: 12px 0;
+	box-sizing: border-box;
+
+	// Default background styling
+	&.has-background {
+		padding: 12px 0;
+	}
+
+	&.no-background {
+		background: transparent !important;
+		padding: 8px 0;
+	}
+
+	.ticker-container {
+		width: 100%;
+		overflow: hidden;
+		position: relative;
+		height: auto;
+		display: flex;
+		align-items: center;
+	}
+
+	.ticker-content {
+		display: inline-flex;
+		align-items: center;
+		animation: scroll-left 30s linear infinite;
+		will-change: transform;
+		min-width: 100%;
+
+		.ticker-text {
+			white-space: nowrap;
+			padding-right: 50px;
+			display: inline-block;
+			min-width: max-content;
+		}
+
+		// Create duplicate for seamless loop
+		&::after {
+			content: attr(data-content);
+			white-space: nowrap;
+			padding-right: 50px;
+			display: inline-block;
+			min-width: max-content;
+		}
+	}
+
+	// Pause animation on hover if enabled
+	&.pause-on-hover .ticker-content:hover {
+		animation-play-state: paused;
+	}
+
+	// Speed variations
+	&[data-speed="5"] .ticker-content { animation-duration: 55s; }
+	&[data-speed="10"] .ticker-content { animation-duration: 50s; }
+	&[data-speed="15"] .ticker-content { animation-duration: 45s; }
+	&[data-speed="20"] .ticker-content { animation-duration: 40s; }
+	&[data-speed="25"] .ticker-content { animation-duration: 35s; }
+	&[data-speed="30"] .ticker-content { animation-duration: 30s; }
+	&[data-speed="35"] .ticker-content { animation-duration: 25s; }
+	&[data-speed="40"] .ticker-content { animation-duration: 20s; }
+	&[data-speed="45"] .ticker-content { animation-duration: 15s; }
+	&[data-speed="50"] .ticker-content { animation-duration: 10s; }
+
+	// Text formatting support
+	&[style*="text-transform: uppercase"] .ticker-text,
+	&[style*="text-transform: uppercase"] .ticker-content::after {
+		text-transform: uppercase;
+	}
+
+	&[style*="text-transform: lowercase"] .ticker-text,
+	&[style*="text-transform: lowercase"] .ticker-content::after {
+		text-transform: lowercase;
+	}
+
+	&[style*="text-transform: capitalize"] .ticker-text,
+	&[style*="text-transform: capitalize"] .ticker-content::after {
+		text-transform: capitalize;
+	}
+
+	&[style*="font-weight: bold"] .ticker-text,
+	&[style*="font-weight: bold"] .ticker-content::after {
+		font-weight: bold;
+	}
+
+	&[style*="font-weight: 300"] .ticker-text,
+	&[style*="font-weight: 300"] .ticker-content::after {
+		font-weight: 300;
+	}
+
+	&[style*="font-weight: 600"] .ticker-text,
+	&[style*="font-weight: 600"] .ticker-content::after {
+		font-weight: 600;
+	}
+
+	// Respect reduced motion preferences
+	@media (prefers-reduced-motion: reduce) {
+		.ticker-content {
+			animation: none;
+			transform: none;
+		}
+	}
+
+	// Mobile responsiveness
+	@media (max-width: 768px) {
+		font-size: 14px !important;
+		
+		&.has-background {
+			padding: 8px 0;
+		}
+		
+		&.no-background {
+			padding: 6px 0;
+		}
+		
+		.ticker-text {
+			padding-right: 30px;
+		}
+		
+		.ticker-content::after {
+			padding-right: 30px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		font-size: 12px !important;
+		
+		&.has-background {
+			padding: 6px 0;
+		}
+		
+		&.no-background {
+			padding: 4px 0;
+		}
+	}
+}
+
+// Scrolling animation - optimized for performance
+@keyframes scroll-left {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+// Full width alignments
+.alignwide .wp-block-telex-ticker-tape-parade,
+.alignfull .wp-block-telex-ticker-tape-parade {
+	width: 100%;
+}

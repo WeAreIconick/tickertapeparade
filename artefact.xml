@@ -1,0 +1,908 @@
+<?xml version="1.0"?><artefact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="artefact.xsd" name="Ticker Tape Parade" slug="ticker-tape-parade" type="code-package">
+  <file name="readme.txt">
+    <description>This file contains the readme information for the block. It is used to provide information about the block, its usage, and any other relevant details.</description>
+    <content><![CDATA[
+=== Ticker Tape Parade ===
+
+Contributors:      WordPress Telex
+Tags:              block, ticker, marquee, announcements, news, scrolling text
+Tested up to:      6.8
+Stable tag:        0.1.0
+License:           GPLv2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+
+A customizable horizontal scrolling text ticker block for displaying announcements, news, or any scrolling text content.
+
+== Description ==
+
+The Ticker Tape Parade block allows you to create eye-catching horizontal scrolling text displays perfect for announcements, news updates, promotional messages, or any content that needs to grab attention. The block features smooth, performant animations with full customization control.
+
+**Key Features:**
+
+* **Easy Content Management**: Enter multiple text items separated by line breaks in a simple textarea
+* **Full Visual Control**: Customize text color, background color, and font size
+* **Animation Settings**: Adjustable scroll speed to match your content needs
+* **Interactive Features**: Optional pause-on-hover functionality for better user experience
+* **Responsive Design**: Automatically adapts to different screen sizes with appropriate font scaling
+* **Accessibility First**: Respects user's reduced motion preferences for inclusivity
+* **Smooth Performance**: Optimized CSS animations that work smoothly across devices
+* **Seamless Looping**: Text loops continuously without visual breaks or stuttering
+
+**Perfect For:**
+
+* News tickers and breaking news displays
+* Promotional announcements and sales alerts
+* Event information and updates
+* Social media feeds and testimonials
+* Stock tickers and data streams
+* Any content requiring attention-grabbing display
+
+The block uses modern CSS animations and respects accessibility guidelines, ensuring a smooth experience for all users while maintaining excellent performance across devices.
+
+== Installation ==
+
+1. Upload the plugin files to the `/wp-content/plugins/ticker-tape-parade` directory, or install the plugin through the WordPress plugins screen directly.
+2. Activate the plugin through the 'Plugins' screen in WordPress
+3. Add the Ticker Tape Parade block to any post or page using the block editor
+4. Enter your text content and customize the appearance using the block controls
+
+== Frequently Asked Questions ==
+
+= How do I add multiple text items? =
+
+Simply enter each text item on a new line in the text area. The block will automatically create a seamless scrolling ticker with all your items.
+
+= Can I control the scrolling speed? =
+
+Yes! Use the speed control in the block settings to adjust from slow to fast scrolling to match your content needs.
+
+= Does it work on mobile devices? =
+
+Absolutely. The block is fully responsive and includes automatic font scaling for optimal mobile viewing experience.
+
+= Is it accessible for users with motion sensitivity? =
+
+Yes, the block respects the user's "prefers-reduced-motion" setting and will disable animations for users who have requested reduced motion in their system preferences.
+
+= Can I pause the scrolling? =
+
+Yes, you can enable the "Pause on hover" option, which allows users to pause the scrolling by hovering over the ticker.
+
+== Screenshots ==
+
+1. Ticker Tape Parade block in the editor with customization controls
+2. Live ticker display on the frontend with smooth scrolling animation
+3. Mobile responsive view showing proper font scaling
+4. Block settings panel with all available options
+
+== Changelog ==
+
+= 0.1.0 =
+* Initial release
+* Horizontal scrolling text ticker functionality
+* Customizable speed, colors, and typography
+* Responsive design and accessibility features
+* Pause on hover option
+* Smooth CSS animations with seamless looping
+
+== Technical Notes ==
+
+The block uses CSS transforms and animations for optimal performance, avoiding layout thrashing. It includes fallbacks for older browsers and respects system-level accessibility preferences.
+]]></content>
+  </file>
+  <file name="ticker-tape-parade.php">
+    <description>This file contains the block registration code in the form of a single block plugin. Any other plugin related functionality should be added to this file. All block rendering functionality should go to the `render.php` file.</description>
+    <content><![CDATA[<?php
+/**
+ * Plugin Name:       Ticker Tape Parade
+ * Description:       A customizable horizontal scrolling text ticker block for displaying announcements, news, or any scrolling text content.
+ * Version:           0.1.0
+ * Requires at least: 6.1
+ * Requires PHP:      7.0
+ * Author:            WordPress Telex
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       ticker-tape-parade-block-wp
+ *
+ * @package TickerTapeParade
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+/**
+ * Registers the block using the metadata loaded from the `block.json` file.
+ * Behind the scenes, it registers also all assets so they can be enqueued
+ * through the block editor in the corresponding context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/register_block_type/
+ */
+function telex_ticker_tape_parade_block_init() {
+	register_block_type( __DIR__ . '/build/' );
+}
+add_action( 'init', 'telex_ticker_tape_parade_block_init' );
+	]]></content>
+  </file>
+  <file name="block.json">
+    <description>This file contains metadata about the block including its name, title, category, icon, and other properties. The icon is a WordPress Dashicon name (e.g., "admin-post", "format-aside", "admin-page"). Do not use any icon that's not in the list under any circustamce. These are the only slugs available:
+	
+	menu menu-alt menu-alt2 menu-alt3 admin-site admin-site-alt admin-site-alt2 admin-site-alt3 dashboard admin-post admin-media admin-links admin-page admin-comments admin-appearance admin-plugins plugins-checked admin-users admin-tools admin-settings admin-network admin-home admin-generic admin-collapse filter admin-customizer admin-multisite welcome-write-blog welcome-add-page welcome-view-site welcome-widgets-menus welcome-comments welcome-learn-more format-aside format-image format-gallery format-video format-status format-quote format-chat format-audio camera camera-alt images-alt images-alt2 video-alt video-alt2 video-alt3 media-archive media-audio media-code media-default media-document media-interactive media-spreadsheet media-text media-video playlist-audio playlist-video controls-play controls-pause controls-forward controls-skipforward controls-back controls-skipback controls-repeat controls-volumeon controls-volumeoff image-crop image-rotate image-rotate-left image-rotate-right image-flip-vertical image-flip-horizontal image-filter undo redo database-add database database-export database-import database-remove database-view align-full-width align-pull-left align-pull-right align-wide block-default button cloud-saved cloud-upload columns cover-image ellipsis embed-audio embed-generic embed-photo embed-post embed-video exit heading html info-outline insert insert-after insert-before remove saved shortcode table-col-after table-col-before table-col-delete table-row-after table-row-before table-row-delete editor-bold editor-italic editor-ul editor-ol editor-ol-rtl editor-quote editor-alignleft editor-aligncenter editor-alignright editor-insertmore editor-spellcheck editor-expand editor-contract editor-kitchensink editor-underline editor-justify editor-textcolor editor-paste-word editor-paste-text editor-removeformatting editor-video editor-customchar editor-outdent editor-indent editor-help editor-strikethrough editor-unlink editor-rtl editor-ltr editor-break editor-code editor-paragraph editor-table align-left align-right align-center align-none lock unlock calendar calendar-alt visibility hidden post-status edit trash sticky external arrow-up arrow-down arrow-right arrow-left arrow-up-alt arrow-down-alt arrow-right-alt arrow-left-alt arrow-up-alt2 arrow-down-alt2 arrow-right-alt2 arrow-left-alt2 sort leftright randomize list-view excerpt-view grid-view move share share-alt share-alt2 rss email email-alt email-alt2 networking amazon facebook facebook-alt google instagram linkedin pinterest podio reddit spotify twitch twitter twitter-alt whatsapp xing youtube hammer art migrate performance universal-access universal-access-alt tickets nametag clipboard heart megaphone schedule tide rest-api code-standards buddicons-activity buddicons-bbpress-logo buddicons-buddypress-logo buddicons-community buddicons-forums buddicons-friends buddicons-groups buddicons-pm buddicons-replies buddicons-topics buddicons-tracking wordpress wordpress-alt pressthis update update-alt screenoptions info cart feedback cloud translation tag category archive tagcloud text bell yes yes-alt no no-alt plus plus-alt plus-alt2 minus dismiss marker star-filled star-half star-empty flag warning location location-alt vault shield shield-alt sos search slides text-page analytics chart-pie chart-bar chart-line chart-area groups businessman businesswoman businessperson id id-alt products awards forms testimonial portfolio book book-alt download upload backup clock lightbulb microphone desktop laptop tablet smartphone phone index-card carrot building store album palmtree tickets-alt money money-alt smiley thumbs-up thumbs-down layout paperclip color-picker edit-large edit-page airplane bank beer calculator car coffee drumstick food fullscreen-alt fullscreen-exit-alt games hourglass open-folder pdf pets printer privacy superhero superhero-alt</description>
+    <content><![CDATA[{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "telex/block-ticker-tape-parade",
+    "version": "0.1.0",
+    "title": "Ticker Tape Parade",
+    "category": "widgets",
+    "icon": "controls-forward",
+    "description": "A customizable horizontal scrolling text ticker for announcements and news.",
+    "example": {
+        "attributes": {
+            "content": "Breaking News: New Product Launch • Special Offer: 50% Off This Week • Update: Server Maintenance Tonight",
+            "speed": 30,
+            "textColor": "#000000",
+            "backgroundColor": "#ffffff",
+            "fontSize": 18,
+            "hasBackground": false
+        }
+    },
+    "attributes": {
+        "content": {
+            "type": "string",
+            "default": "Enter your ticker text here • Separate items with bullet points or line breaks"
+        },
+        "speed": {
+            "type": "number",
+            "default": 30
+        },
+        "textColor": {
+            "type": "string",
+            "default": "#000000"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "default": "#ffffff"
+        },
+        "fontSize": {
+            "type": "number",
+            "default": 18
+        },
+        "pauseOnHover": {
+            "type": "boolean",
+            "default": true
+        },
+        "textTransform": {
+            "type": "string",
+            "default": "none"
+        },
+        "fontWeight": {
+            "type": "string",
+            "default": "normal"
+        },
+        "hasBackground": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ],
+        "color": {
+            "text": true,
+            "background": true,
+            "gradients": false
+        }
+    },
+    "textdomain": "ticker-tape-parade-block-wp",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "viewScript": "file:./view.js"
+}]]></content>
+  </file>
+  <file name="index.js">
+    <description>This file registers the block, specifies the edit and save functions, and loads the block's metadata</description>
+    <content><![CDATA[
+  /**
+ * Registers a new block provided a unique name and an object defining its behavior.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+import { registerBlockType } from '@wordpress/blocks';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * All files containing `style` keyword are bundled together. The code used
+ * gets applied both to the front of your site and to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './style.scss';
+
+/**
+ * Internal dependencies
+ */
+import Edit from './edit';
+import save from './save';
+import metadata from './block.json';
+
+/**
+ * Every block starts by registering a new block type definition.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
+ */
+registerBlockType( metadata.name, {
+	/**
+	 * @see ./edit.js
+	 */
+	edit: Edit,
+
+	/**
+	 * @see ./save.js
+	 */
+	save,
+} );
+	]]></content>
+  </file>
+  <file name="edit.js">
+    <description>This file contains the edit function for the block which is responsible for rendering the block in the editor.</description>
+    <content><![CDATA[/**
+ * Retrieves the translation of text.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
+ */
+import { __ } from '@wordpress/i18n';
+
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ */
+import { 
+	useBlockProps, 
+	InspectorControls,
+	BlockControls,
+	ColorPalette,
+	PanelColorSettings
+} from '@wordpress/block-editor';
+
+/**
+ * WordPress components for the sidebar controls.
+ */
+import {
+	PanelBody,
+	TextareaControl,
+	RangeControl,
+	ToggleControl,
+	BaseControl,
+	ToolbarGroup,
+	ToolbarButton,
+	SelectControl,
+	ExternalLink
+} from '@wordpress/components';
+
+/**
+ * WordPress icons
+ */
+import { formatUppercase, formatBold } from '@wordpress/icons';
+
+/**
+ * React hooks
+ */
+import { useState, useEffect } from '@wordpress/element';
+
+/**
+ * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
+ * Those files can contain any CSS code that gets applied to the editor.
+ *
+ * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ */
+import './editor.scss';
+
+/**
+ * The edit function describes the structure of your block in the context of the
+ * editor. This represents what the editor will render when the block is used.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
+ *
+ * @param {Object} props - Block properties.
+ * @return {Element} Element to render.
+ */
+export default function Edit({ attributes, setAttributes }) {
+	const { 
+		content, 
+		speed, 
+		textColor, 
+		backgroundColor, 
+		fontSize,
+		pauseOnHover,
+		textTransform,
+		fontWeight,
+		hasBackground
+	} = attributes;
+
+	const [isAnimating, setIsAnimating] = useState(true);
+
+	const blockProps = useBlockProps({
+		style: {
+			backgroundColor: hasBackground ? backgroundColor : 'transparent',
+			color: textColor,
+			fontSize: `${fontSize}px`,
+			textTransform,
+			fontWeight,
+		},
+		className: 'wp-block-telex-ticker-tape-parade'
+	});
+
+	// Calculate animation duration based on speed (lower speed = longer duration)
+	const animationDuration = `${60 - speed}s`;
+
+	const tickerStyle = {
+		animationDuration: animationDuration,
+		animationPlayState: isAnimating ? 'running' : 'paused',
+	};
+
+	useEffect(() => {
+		setIsAnimating(true);
+	}, [content, speed]);
+
+	return (
+		<>
+			<BlockControls>
+				<ToolbarGroup>
+					<ToolbarButton
+						isPressed={textTransform === 'uppercase'}
+						onClick={() => setAttributes({ 
+							textTransform: textTransform === 'uppercase' ? 'none' : 'uppercase' 
+						})}
+						icon={formatUppercase}
+						label={__('Uppercase', 'ticker-tape-parade-block-wp')}
+					/>
+					<ToolbarButton
+						isPressed={fontWeight === 'bold'}
+						onClick={() => setAttributes({ 
+							fontWeight: fontWeight === 'bold' ? 'normal' : 'bold' 
+						})}
+						icon={formatBold}
+						label={__('Bold', 'ticker-tape-parade-block-wp')}
+					/>
+				</ToolbarGroup>
+			</BlockControls>
+
+			<InspectorControls>
+				<PanelBody title={__('Content Settings', 'ticker-tape-parade-block-wp')}>
+					<TextareaControl
+						label={__('Ticker Text', 'ticker-tape-parade-block-wp')}
+						value={content}
+						onChange={(value) => setAttributes({ content: value })}
+						placeholder={__('Enter ticker text. Use bullet points (•) or line breaks to separate items.', 'ticker-tape-parade-block-wp')}
+						rows={4}
+						help={__('Separate multiple items with bullet points (•) or line breaks for continuous scrolling.', 'ticker-tape-parade-block-wp')}
+					/>
+				</PanelBody>
+
+				<PanelBody title={__('Text Formatting', 'ticker-tape-parade-block-wp')}>
+					<SelectControl
+						label={__('Text Transform', 'ticker-tape-parade-block-wp')}
+						value={textTransform}
+						options={[
+							{ label: __('None', 'ticker-tape-parade-block-wp'), value: 'none' },
+							{ label: __('Uppercase', 'ticker-tape-parade-block-wp'), value: 'uppercase' },
+							{ label: __('Lowercase', 'ticker-tape-parade-block-wp'), value: 'lowercase' },
+							{ label: __('Capitalize', 'ticker-tape-parade-block-wp'), value: 'capitalize' },
+						]}
+						onChange={(value) => setAttributes({ textTransform: value })}
+					/>
+					
+					<SelectControl
+						label={__('Font Weight', 'ticker-tape-parade-block-wp')}
+						value={fontWeight}
+						options={[
+							{ label: __('Normal', 'ticker-tape-parade-block-wp'), value: 'normal' },
+							{ label: __('Bold', 'ticker-tape-parade-block-wp'), value: 'bold' },
+							{ label: __('Light', 'ticker-tape-parade-block-wp'), value: '300' },
+							{ label: __('Semi Bold', 'ticker-tape-parade-block-wp'), value: '600' },
+						]}
+						onChange={(value) => setAttributes({ fontWeight: value })}
+					/>
+
+					<RangeControl
+						label={__('Font Size', 'ticker-tape-parade-block-wp')}
+						value={fontSize}
+						onChange={(value) => setAttributes({ fontSize: value })}
+						min={12}
+						max={36}
+						step={1}
+					/>
+				</PanelBody>
+
+				<PanelBody title={__('Animation Settings', 'ticker-tape-parade-block-wp')}>
+					<RangeControl
+						label={__('Scroll Speed', 'ticker-tape-parade-block-wp')}
+						value={speed}
+						onChange={(value) => setAttributes({ speed: value })}
+						min={5}
+						max={50}
+						step={1}
+						help={__('Higher values = faster scrolling', 'ticker-tape-parade-block-wp')}
+					/>
+					<ToggleControl
+						label={__('Pause on Hover', 'ticker-tape-parade-block-wp')}
+						checked={pauseOnHover}
+						onChange={(value) => setAttributes({ pauseOnHover: value })}
+						help={__('Allow users to pause the ticker by hovering over it', 'ticker-tape-parade-block-wp')}
+					/>
+				</PanelBody>
+
+				<PanelColorSettings
+					title={__('Color Settings', 'ticker-tape-parade-block-wp')}
+					colorSettings={[
+						{
+							value: textColor,
+							onChange: (color) => setAttributes({ textColor: color }),
+							label: __('Text Color', 'ticker-tape-parade-block-wp'),
+						},
+						...(hasBackground ? [{
+							value: backgroundColor,
+							onChange: (color) => setAttributes({ backgroundColor: color }),
+							label: __('Background Color', 'ticker-tape-parade-block-wp'),
+						}] : [])
+					]}
+				>
+					<ToggleControl
+						label={__('Use Background Color', 'ticker-tape-parade-block-wp')}
+						checked={hasBackground}
+						onChange={(value) => setAttributes({ hasBackground: value })}
+						help={__('Toggle to add or remove background color', 'ticker-tape-parade-block-wp')}
+					/>
+				</PanelColorSettings>
+
+				<PanelBody title={__('Powered by Telex', 'ticker-tape-parade-block-wp')} initialOpen={false}>
+					<p style={{ marginBottom: '12px', color: '#666' }}>
+						{__('Telex is basically the J.A.R.V.I.S of WordPress development - an AI that builds blocks so you don\'t have to.', 'ticker-tape-parade-block-wp')}
+					</p>
+					<ExternalLink href="https://telex.automattic.ai">
+						{__('Learn more about Telex', 'ticker-tape-parade-block-wp')}
+					</ExternalLink>
+				</PanelBody>
+			</InspectorControls>
+
+			<div {...blockProps}>
+				<div className="ticker-container">
+					<div 
+						className="ticker-content"
+						style={tickerStyle}
+						onMouseEnter={() => pauseOnHover && setIsAnimating(false)}
+						onMouseLeave={() => pauseOnHover && setIsAnimating(true)}
+					>
+						<span className="ticker-text">
+							{content || __('Enter your ticker text...', 'ticker-tape-parade-block-wp')}
+						</span>
+					</div>
+				</div>
+				<div className="ticker-preview-note">
+					{__('Preview: Ticker scrolls from right to left', 'ticker-tape-parade-block-wp')}
+				</div>
+			</div>
+		</>
+	);
+}]]></content>
+  </file>
+  <file name="save.js">
+    <description>This file contains the save function for the block which is responsible for creating the static result of rendering the block on the client to display the saved result on the front end.</description>
+    <content><![CDATA[  /**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ */
+import { useBlockProps } from '@wordpress/block-editor';
+
+/**
+ * The save function defines the way in which the different attributes should
+ * be combined into the final markup, which is then serialized by the block
+ * editor into `post_content`.
+ *
+ * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
+ *
+ * @param {Object} props - Block properties.
+ * @return {Element} Element to render.
+ */
+export default function save({ attributes }) {
+	const { 
+		content, 
+		speed, 
+		textColor, 
+		backgroundColor, 
+		fontSize,
+		pauseOnHover,
+		textTransform,
+		fontWeight,
+		hasBackground
+	} = attributes;
+
+	const blockProps = useBlockProps.save({
+		style: {
+			backgroundColor: hasBackground ? backgroundColor : 'transparent',
+			color: textColor,
+			fontSize: `${fontSize}px`,
+			textTransform,
+			fontWeight,
+		},
+		className: `wp-block-telex-ticker-tape-parade ${pauseOnHover ? 'pause-on-hover' : ''} ${hasBackground ? 'has-background' : 'no-background'}`,
+		'data-speed': speed,
+	});
+
+	return (
+		<div {...blockProps}>
+			<div className="ticker-container">
+				<div className="ticker-content">
+					<span className="ticker-text">
+						{content}
+					</span>
+				</div>
+			</div>
+		</div>
+	);
+}
+	]]></content>
+  </file>
+  <file name="style.scss">
+    <description>This file contains styles for the block in the front end.</description>
+    <content><![CDATA[/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ */
+
+.wp-block-telex-ticker-tape-parade {
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	white-space: nowrap;
+	padding: 12px 0;
+	box-sizing: border-box;
+
+	// Default background styling
+	&.has-background {
+		padding: 12px 0;
+	}
+
+	&.no-background {
+		background: transparent !important;
+		padding: 8px 0;
+	}
+
+	.ticker-container {
+		width: 100%;
+		overflow: hidden;
+		position: relative;
+		height: auto;
+		display: flex;
+		align-items: center;
+	}
+
+	.ticker-content {
+		display: inline-flex;
+		align-items: center;
+		animation: scroll-left 30s linear infinite;
+		will-change: transform;
+		min-width: 100%;
+
+		.ticker-text {
+			white-space: nowrap;
+			padding-right: 50px;
+			display: inline-block;
+			min-width: max-content;
+		}
+
+		// Create duplicate for seamless loop
+		&::after {
+			content: attr(data-content);
+			white-space: nowrap;
+			padding-right: 50px;
+			display: inline-block;
+			min-width: max-content;
+		}
+	}
+
+	// Pause animation on hover if enabled
+	&.pause-on-hover .ticker-content:hover {
+		animation-play-state: paused;
+	}
+
+	// Speed variations
+	&[data-speed="5"] .ticker-content { animation-duration: 55s; }
+	&[data-speed="10"] .ticker-content { animation-duration: 50s; }
+	&[data-speed="15"] .ticker-content { animation-duration: 45s; }
+	&[data-speed="20"] .ticker-content { animation-duration: 40s; }
+	&[data-speed="25"] .ticker-content { animation-duration: 35s; }
+	&[data-speed="30"] .ticker-content { animation-duration: 30s; }
+	&[data-speed="35"] .ticker-content { animation-duration: 25s; }
+	&[data-speed="40"] .ticker-content { animation-duration: 20s; }
+	&[data-speed="45"] .ticker-content { animation-duration: 15s; }
+	&[data-speed="50"] .ticker-content { animation-duration: 10s; }
+
+	// Text formatting support
+	&[style*="text-transform: uppercase"] .ticker-text,
+	&[style*="text-transform: uppercase"] .ticker-content::after {
+		text-transform: uppercase;
+	}
+
+	&[style*="text-transform: lowercase"] .ticker-text,
+	&[style*="text-transform: lowercase"] .ticker-content::after {
+		text-transform: lowercase;
+	}
+
+	&[style*="text-transform: capitalize"] .ticker-text,
+	&[style*="text-transform: capitalize"] .ticker-content::after {
+		text-transform: capitalize;
+	}
+
+	&[style*="font-weight: bold"] .ticker-text,
+	&[style*="font-weight: bold"] .ticker-content::after {
+		font-weight: bold;
+	}
+
+	&[style*="font-weight: 300"] .ticker-text,
+	&[style*="font-weight: 300"] .ticker-content::after {
+		font-weight: 300;
+	}
+
+	&[style*="font-weight: 600"] .ticker-text,
+	&[style*="font-weight: 600"] .ticker-content::after {
+		font-weight: 600;
+	}
+
+	// Respect reduced motion preferences
+	@media (prefers-reduced-motion: reduce) {
+		.ticker-content {
+			animation: none;
+			transform: none;
+		}
+	}
+
+	// Mobile responsiveness
+	@media (max-width: 768px) {
+		font-size: 14px !important;
+		
+		&.has-background {
+			padding: 8px 0;
+		}
+		
+		&.no-background {
+			padding: 6px 0;
+		}
+		
+		.ticker-text {
+			padding-right: 30px;
+		}
+		
+		.ticker-content::after {
+			padding-right: 30px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		font-size: 12px !important;
+		
+		&.has-background {
+			padding: 6px 0;
+		}
+		
+		&.no-background {
+			padding: 4px 0;
+		}
+	}
+}
+
+// Scrolling animation - optimized for performance
+@keyframes scroll-left {
+	0% {
+		transform: translateX(100%);
+	}
+	100% {
+		transform: translateX(-100%);
+	}
+}
+
+// Full width alignments
+.alignwide .wp-block-telex-ticker-tape-parade,
+.alignfull .wp-block-telex-ticker-tape-parade {
+	width: 100%;
+}]]></content>
+  </file>
+  <file name="editor.scss">
+    <description>This file contains styles for the block in the editor.</description>
+    <content><![CDATA[
+  /**
+ * The following styles get applied inside the editor only.
+ */
+
+.wp-block-telex-ticker-tape-parade {
+	border: 1px dashed #ccc;
+	position: relative;
+
+	.ticker-preview-note {
+		position: absolute;
+		top: 4px;
+		right: 8px;
+		font-size: 11px;
+		color: rgba(255, 255, 255, 0.7);
+		background: rgba(0, 0, 0, 0.3);
+		padding: 2px 6px;
+		border-radius: 3px;
+		pointer-events: none;
+		z-index: 2;
+	}
+
+	.ticker-content {
+		// Slower animation in editor for preview
+		animation-duration: 20s !important;
+	}
+
+	// Make sure the editor preview is visible
+	.ticker-container {
+		min-height: 40px;
+		display: flex;
+		align-items: center;
+	}
+
+	// Editor-specific hover states
+	&:hover {
+		border-color: #007cba;
+	}
+
+	&.is-selected {
+		border-color: #007cba;
+		border-style: solid;
+	}
+}
+
+// Inspector controls styling
+.components-panel__body {
+	.components-base-control__label {
+		font-weight: 600;
+		margin-bottom: 8px;
+	}
+
+	.components-color-picker {
+		margin-bottom: 16px;
+	}
+}
+	]]></content>
+  </file>
+  <file name="view.js">
+    <description>This file contains the view function for the block which is responsible for rendering interactive behaviors of the block on the front end. Ideally using the WordPress interactivity API.</description>
+    <content><![CDATA[/**
+ * Frontend JavaScript for the Ticker Tape Parade block.
+ * Handles dynamic animation timing and accessibility features.
+ */
+
+document.addEventListener('DOMContentLoaded', function() {
+	const tickers = document.querySelectorAll('.wp-block-telex-ticker-tape-parade');
+	
+	tickers.forEach(function(ticker) {
+		const tickerContent = ticker.querySelector('.ticker-content');
+		const tickerText = ticker.querySelector('.ticker-text');
+		const speed = parseInt(ticker.dataset.speed) || 30;
+		
+		if (!tickerContent || !tickerText) return;
+
+		// Set the data-content attribute for the ::after pseudo-element
+		const textContent = tickerText.textContent.trim();
+		tickerContent.setAttribute('data-content', textContent);
+		
+		// Handle reduced motion preference first
+		const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReducedMotion) {
+			tickerContent.style.animation = 'none';
+			tickerContent.style.transform = 'translateX(0)';
+			return;
+		}
+
+		// Calculate and apply animation duration based on speed
+		const animationDuration = Math.max(10, 60 - speed) + 's';
+		tickerContent.style.animationDuration = animationDuration;
+		tickerContent.style.animationPlayState = 'running';
+		
+		// Handle pause on hover if enabled
+		if (ticker.classList.contains('pause-on-hover')) {
+			ticker.addEventListener('mouseenter', function() {
+				tickerContent.style.animationPlayState = 'paused';
+			});
+			
+			ticker.addEventListener('mouseleave', function() {
+				if (!prefersReducedMotion) {
+					tickerContent.style.animationPlayState = 'running';
+				}
+			});
+			
+			// Handle focus for accessibility
+			ticker.addEventListener('focus', function() {
+				tickerContent.style.animationPlayState = 'paused';
+			});
+			
+			ticker.addEventListener('blur', function() {
+				if (!prefersReducedMotion) {
+					tickerContent.style.animationPlayState = 'running';
+				}
+			});
+		}
+
+		// Optimize performance by pausing animations when page is hidden
+		document.addEventListener('visibilitychange', function() {
+			if (document.hidden) {
+				tickerContent.style.animationPlayState = 'paused';
+			} else if (!prefersReducedMotion && !ticker.matches(':hover')) {
+				tickerContent.style.animationPlayState = 'running';
+			}
+		});
+
+		// Handle resize efficiently
+		let resizeTimeout;
+		window.addEventListener('resize', function() {
+			clearTimeout(resizeTimeout);
+			resizeTimeout = setTimeout(function() {
+				if (!prefersReducedMotion) {
+					// Force restart animation to handle container size changes
+					const currentDuration = tickerContent.style.animationDuration;
+					tickerContent.style.animation = 'none';
+					tickerContent.offsetHeight; // Force reflow
+					tickerContent.style.animation = `scroll-left ${currentDuration} linear infinite`;
+				}
+			}, 150);
+		});
+	});
+
+	// Listen for changes in reduced motion preference
+	if (window.matchMedia) {
+		const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+		mediaQuery.addEventListener('change', function() {
+			tickers.forEach(function(ticker) {
+				const tickerContent = ticker.querySelector('.ticker-content');
+				if (tickerContent) {
+					if (mediaQuery.matches) {
+						tickerContent.style.animation = 'none';
+						tickerContent.style.transform = 'translateX(0)';
+					} else {
+						const speed = parseInt(ticker.dataset.speed) || 30;
+						const animationDuration = Math.max(10, 60 - speed) + 's';
+						tickerContent.style.animation = `scroll-left ${animationDuration} linear infinite`;
+					}
+				}
+			});
+		});
+	}
+});]]></content>
+  </file>
+  <file name="render.php">
+    <description>This file contains the render callback function for the block, which is responsible for rendering the block content on the front end. A render function should exist only if the block is dynamic.</description>
+    <content><![CDATA[
+]]></content>
+  </file>
+  <file name="package.json">
+    <description>The AI assistant should only edit 'text-ticker', 'description' and resolve 'isDynamicVariant' in this file and ALWAYS INCLUDE IT. This file includes the necessary scripts for building, formatting, and linting the block code. Dependencies are managed at the workspace level via pnpm.</description>
+    <content><![CDATA[{
+    "name": "ticker-tape-parade",
+    "version": "0.1.0",
+    "description": "A customizable horizontal scrolling text ticker block for displaying announcements, news, or any scrolling text content.",
+    "author": "WordPress Telex",
+    "license": "GPL-2.0-or-later",
+    "main": "build/index.js",
+    "scripts": {
+        "build": "wp-scripts build --webpack-copy-php",
+        "format": "wp-scripts format",
+        "lint:css": "wp-scripts lint-style",
+        "lint:js": "wp-scripts lint-js",
+        "packages-update": "wp-scripts packages-update",
+        "plugin-zip": "wp-scripts plugin-zip",
+        "start": "wp-scripts start --blocks-manifest"
+    }
+}]]></content>
+  </file>
+</artefact>
