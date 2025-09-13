@@ -1,5 +1,4 @@
-
-  /**
+/**
  * The following styles get applied inside the editor only.
  */
 
@@ -12,17 +11,24 @@
 		top: 4px;
 		right: 8px;
 		font-size: 11px;
-		color: rgba(255, 255, 255, 0.7);
-		background: rgba(0, 0, 0, 0.3);
+		color: rgba(0, 0, 0, 0.6);
+		background: rgba(255, 255, 255, 0.9);
 		padding: 2px 6px;
 		border-radius: 3px;
 		pointer-events: none;
 		z-index: 2;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	&.has-background .ticker-preview-note {
+		color: rgba(255, 255, 255, 0.9);
+		background: rgba(0, 0, 0, 0.7);
+		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
 
 	.ticker-content {
-		// Slower animation in editor for preview
-		animation-duration: 20s !important;
+		// Use a more reasonable preview speed that updates with actual speed
+		animation-duration: var(--editor-animation-duration, 20s) !important;
 	}
 
 	// Make sure the editor preview is visible
@@ -41,6 +47,54 @@
 		border-color: #007cba;
 		border-style: solid;
 	}
+
+	// Speed-based animation durations for editor preview
+	&[data-speed="5"] .ticker-content { animation-duration: 55s !important; }
+	&[data-speed="6"] .ticker-content { animation-duration: 54s !important; }
+	&[data-speed="7"] .ticker-content { animation-duration: 53s !important; }
+	&[data-speed="8"] .ticker-content { animation-duration: 52s !important; }
+	&[data-speed="9"] .ticker-content { animation-duration: 51s !important; }
+	&[data-speed="10"] .ticker-content { animation-duration: 50s !important; }
+	&[data-speed="11"] .ticker-content { animation-duration: 49s !important; }
+	&[data-speed="12"] .ticker-content { animation-duration: 48s !important; }
+	&[data-speed="13"] .ticker-content { animation-duration: 47s !important; }
+	&[data-speed="14"] .ticker-content { animation-duration: 46s !important; }
+	&[data-speed="15"] .ticker-content { animation-duration: 45s !important; }
+	&[data-speed="16"] .ticker-content { animation-duration: 44s !important; }
+	&[data-speed="17"] .ticker-content { animation-duration: 43s !important; }
+	&[data-speed="18"] .ticker-content { animation-duration: 42s !important; }
+	&[data-speed="19"] .ticker-content { animation-duration: 41s !important; }
+	&[data-speed="20"] .ticker-content { animation-duration: 40s !important; }
+	&[data-speed="21"] .ticker-content { animation-duration: 39s !important; }
+	&[data-speed="22"] .ticker-content { animation-duration: 38s !important; }
+	&[data-speed="23"] .ticker-content { animation-duration: 37s !important; }
+	&[data-speed="24"] .ticker-content { animation-duration: 36s !important; }
+	&[data-speed="25"] .ticker-content { animation-duration: 35s !important; }
+	&[data-speed="26"] .ticker-content { animation-duration: 34s !important; }
+	&[data-speed="27"] .ticker-content { animation-duration: 33s !important; }
+	&[data-speed="28"] .ticker-content { animation-duration: 32s !important; }
+	&[data-speed="29"] .ticker-content { animation-duration: 31s !important; }
+	&[data-speed="30"] .ticker-content { animation-duration: 30s !important; }
+	&[data-speed="31"] .ticker-content { animation-duration: 29s !important; }
+	&[data-speed="32"] .ticker-content { animation-duration: 28s !important; }
+	&[data-speed="33"] .ticker-content { animation-duration: 27s !important; }
+	&[data-speed="34"] .ticker-content { animation-duration: 26s !important; }
+	&[data-speed="35"] .ticker-content { animation-duration: 25s !important; }
+	&[data-speed="36"] .ticker-content { animation-duration: 24s !important; }
+	&[data-speed="37"] .ticker-content { animation-duration: 23s !important; }
+	&[data-speed="38"] .ticker-content { animation-duration: 22s !important; }
+	&[data-speed="39"] .ticker-content { animation-duration: 21s !important; }
+	&[data-speed="40"] .ticker-content { animation-duration: 20s !important; }
+	&[data-speed="41"] .ticker-content { animation-duration: 19s !important; }
+	&[data-speed="42"] .ticker-content { animation-duration: 18s !important; }
+	&[data-speed="43"] .ticker-content { animation-duration: 17s !important; }
+	&[data-speed="44"] .ticker-content { animation-duration: 16s !important; }
+	&[data-speed="45"] .ticker-content { animation-duration: 15s !important; }
+	&[data-speed="46"] .ticker-content { animation-duration: 14s !important; }
+	&[data-speed="47"] .ticker-content { animation-duration: 13s !important; }
+	&[data-speed="48"] .ticker-content { animation-duration: 12s !important; }
+	&[data-speed="49"] .ticker-content { animation-duration: 11s !important; }
+	&[data-speed="50"] .ticker-content { animation-duration: 10s !important; }
 }
 
 // Inspector controls styling
@@ -54,4 +108,3 @@
 		margin-bottom: 16px;
 	}
 }
-	

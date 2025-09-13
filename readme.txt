@@ -8,7 +8,7 @@ Stable tag:        0.1.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 
-Clean horizontal text ticker for your announcements and updates. Fully customizable, zero hassle.
+A customizable horizontal scrolling text ticker block for displaying announcements, news, or any scrolling text content.
 
 == Description ==
 

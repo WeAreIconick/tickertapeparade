@@ -294,7 +294,7 @@ import { formatUppercase, formatBold } from '@wordpress/icons';
 /**
  * React hooks
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -336,11 +336,15 @@ export default function Edit({ attributes, setAttributes }) {
 			textTransform,
 			fontWeight,
 		},
-		className: 'wp-block-telex-ticker-tape-parade'
+		className: 'wp-block-telex-ticker-tape-parade',
+		'data-speed': speed
 	});
 
 	// Calculate animation duration based on speed (lower speed = longer duration)
-	const animationDuration = `${60 - speed}s`;
+	// Using the same formula as the frontend for consistency
+	const animationDuration = useMemo(() => {
+		return `${Math.max(10, 60 - speed)}s`;
+	}, [speed]);
 
 	const tickerStyle = {
 		animationDuration: animationDuration,
@@ -429,7 +433,7 @@ export default function Edit({ attributes, setAttributes }) {
 						min={5}
 						max={50}
 						step={1}
-						help={__('Higher values = faster scrolling', 'ticker-tape-parade-block-wp')}
+						help={__(`Higher values = faster scrolling (Current: ${animationDuration} per cycle)`, 'ticker-tape-parade-block-wp')}
 					/>
 					<ToggleControl
 						label={__('Pause on Hover', 'ticker-tape-parade-block-wp')}
@@ -486,7 +490,7 @@ export default function Edit({ attributes, setAttributes }) {
 					</div>
 				</div>
 				<div className="ticker-preview-note">
-					{__('Preview: Ticker scrolls from right to left', 'ticker-tape-parade-block-wp')}
+					{__(`Preview: Scrolls ${animationDuration} per cycle (Speed: ${speed})`, 'ticker-tape-parade-block-wp')}
 				</div>
 			</div>
 		</>
@@ -495,7 +499,7 @@ export default function Edit({ attributes, setAttributes }) {
   </file>
   <file name="save.js">
     <description>This file contains the save function for the block which is responsible for creating the static result of rendering the block on the client to display the saved result on the front end.</description>
-    <content><![CDATA[  /**
+    <content><![CDATA[/**
  * React hook that is used to mark the block wrapper element.
  * It provides all the necessary props like the class name.
  *
@@ -549,8 +553,7 @@ export default function save({ attributes }) {
 			</div>
 		</div>
 	);
-}
-	]]></content>
+}]]></content>
   </file>
   <file name="style.scss">
     <description>This file contains styles for the block in the front end.</description>
@@ -615,16 +618,52 @@ export default function save({ attributes }) {
 		animation-play-state: paused;
 	}
 
-	// Speed variations
+	// Speed variations - comprehensive coverage
 	&[data-speed="5"] .ticker-content { animation-duration: 55s; }
+	&[data-speed="6"] .ticker-content { animation-duration: 54s; }
+	&[data-speed="7"] .ticker-content { animation-duration: 53s; }
+	&[data-speed="8"] .ticker-content { animation-duration: 52s; }
+	&[data-speed="9"] .ticker-content { animation-duration: 51s; }
 	&[data-speed="10"] .ticker-content { animation-duration: 50s; }
+	&[data-speed="11"] .ticker-content { animation-duration: 49s; }
+	&[data-speed="12"] .ticker-content { animation-duration: 48s; }
+	&[data-speed="13"] .ticker-content { animation-duration: 47s; }
+	&[data-speed="14"] .ticker-content { animation-duration: 46s; }
 	&[data-speed="15"] .ticker-content { animation-duration: 45s; }
+	&[data-speed="16"] .ticker-content { animation-duration: 44s; }
+	&[data-speed="17"] .ticker-content { animation-duration: 43s; }
+	&[data-speed="18"] .ticker-content { animation-duration: 42s; }
+	&[data-speed="19"] .ticker-content { animation-duration: 41s; }
 	&[data-speed="20"] .ticker-content { animation-duration: 40s; }
+	&[data-speed="21"] .ticker-content { animation-duration: 39s; }
+	&[data-speed="22"] .ticker-content { animation-duration: 38s; }
+	&[data-speed="23"] .ticker-content { animation-duration: 37s; }
+	&[data-speed="24"] .ticker-content { animation-duration: 36s; }
 	&[data-speed="25"] .ticker-content { animation-duration: 35s; }
+	&[data-speed="26"] .ticker-content { animation-duration: 34s; }
+	&[data-speed="27"] .ticker-content { animation-duration: 33s; }
+	&[data-speed="28"] .ticker-content { animation-duration: 32s; }
+	&[data-speed="29"] .ticker-content { animation-duration: 31s; }
 	&[data-speed="30"] .ticker-content { animation-duration: 30s; }
+	&[data-speed="31"] .ticker-content { animation-duration: 29s; }
+	&[data-speed="32"] .ticker-content { animation-duration: 28s; }
+	&[data-speed="33"] .ticker-content { animation-duration: 27s; }
+	&[data-speed="34"] .ticker-content { animation-duration: 26s; }
 	&[data-speed="35"] .ticker-content { animation-duration: 25s; }
+	&[data-speed="36"] .ticker-content { animation-duration: 24s; }
+	&[data-speed="37"] .ticker-content { animation-duration: 23s; }
+	&[data-speed="38"] .ticker-content { animation-duration: 22s; }
+	&[data-speed="39"] .ticker-content { animation-duration: 21s; }
 	&[data-speed="40"] .ticker-content { animation-duration: 20s; }
+	&[data-speed="41"] .ticker-content { animation-duration: 19s; }
+	&[data-speed="42"] .ticker-content { animation-duration: 18s; }
+	&[data-speed="43"] .ticker-content { animation-duration: 17s; }
+	&[data-speed="44"] .ticker-content { animation-duration: 16s; }
 	&[data-speed="45"] .ticker-content { animation-duration: 15s; }
+	&[data-speed="46"] .ticker-content { animation-duration: 14s; }
+	&[data-speed="47"] .ticker-content { animation-duration: 13s; }
+	&[data-speed="48"] .ticker-content { animation-duration: 12s; }
+	&[data-speed="49"] .ticker-content { animation-duration: 11s; }
 	&[data-speed="50"] .ticker-content { animation-duration: 10s; }
 
 	// Text formatting support
@@ -718,8 +757,7 @@ export default function save({ attributes }) {
   </file>
   <file name="editor.scss">
     <description>This file contains styles for the block in the editor.</description>
-    <content><![CDATA[
-  /**
+    <content><![CDATA[/**
  * The following styles get applied inside the editor only.
  */
 
@@ -732,17 +770,24 @@ export default function save({ attributes }) {
 		top: 4px;
 		right: 8px;
 		font-size: 11px;
-		color: rgba(255, 255, 255, 0.7);
-		background: rgba(0, 0, 0, 0.3);
+		color: rgba(0, 0, 0, 0.6);
+		background: rgba(255, 255, 255, 0.9);
 		padding: 2px 6px;
 		border-radius: 3px;
 		pointer-events: none;
 		z-index: 2;
+		border: 1px solid rgba(0, 0, 0, 0.1);
+	}
+
+	&.has-background .ticker-preview-note {
+		color: rgba(255, 255, 255, 0.9);
+		background: rgba(0, 0, 0, 0.7);
+		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
 
 	.ticker-content {
-		// Slower animation in editor for preview
-		animation-duration: 20s !important;
+		// Use a more reasonable preview speed that updates with actual speed
+		animation-duration: var(--editor-animation-duration, 20s) !important;
 	}
 
 	// Make sure the editor preview is visible
@@ -761,6 +806,54 @@ export default function save({ attributes }) {
 		border-color: #007cba;
 		border-style: solid;
 	}
+
+	// Speed-based animation durations for editor preview
+	&[data-speed="5"] .ticker-content { animation-duration: 55s !important; }
+	&[data-speed="6"] .ticker-content { animation-duration: 54s !important; }
+	&[data-speed="7"] .ticker-content { animation-duration: 53s !important; }
+	&[data-speed="8"] .ticker-content { animation-duration: 52s !important; }
+	&[data-speed="9"] .ticker-content { animation-duration: 51s !important; }
+	&[data-speed="10"] .ticker-content { animation-duration: 50s !important; }
+	&[data-speed="11"] .ticker-content { animation-duration: 49s !important; }
+	&[data-speed="12"] .ticker-content { animation-duration: 48s !important; }
+	&[data-speed="13"] .ticker-content { animation-duration: 47s !important; }
+	&[data-speed="14"] .ticker-content { animation-duration: 46s !important; }
+	&[data-speed="15"] .ticker-content { animation-duration: 45s !important; }
+	&[data-speed="16"] .ticker-content { animation-duration: 44s !important; }
+	&[data-speed="17"] .ticker-content { animation-duration: 43s !important; }
+	&[data-speed="18"] .ticker-content { animation-duration: 42s !important; }
+	&[data-speed="19"] .ticker-content { animation-duration: 41s !important; }
+	&[data-speed="20"] .ticker-content { animation-duration: 40s !important; }
+	&[data-speed="21"] .ticker-content { animation-duration: 39s !important; }
+	&[data-speed="22"] .ticker-content { animation-duration: 38s !important; }
+	&[data-speed="23"] .ticker-content { animation-duration: 37s !important; }
+	&[data-speed="24"] .ticker-content { animation-duration: 36s !important; }
+	&[data-speed="25"] .ticker-content { animation-duration: 35s !important; }
+	&[data-speed="26"] .ticker-content { animation-duration: 34s !important; }
+	&[data-speed="27"] .ticker-content { animation-duration: 33s !important; }
+	&[data-speed="28"] .ticker-content { animation-duration: 32s !important; }
+	&[data-speed="29"] .ticker-content { animation-duration: 31s !important; }
+	&[data-speed="30"] .ticker-content { animation-duration: 30s !important; }
+	&[data-speed="31"] .ticker-content { animation-duration: 29s !important; }
+	&[data-speed="32"] .ticker-content { animation-duration: 28s !important; }
+	&[data-speed="33"] .ticker-content { animation-duration: 27s !important; }
+	&[data-speed="34"] .ticker-content { animation-duration: 26s !important; }
+	&[data-speed="35"] .ticker-content { animation-duration: 25s !important; }
+	&[data-speed="36"] .ticker-content { animation-duration: 24s !important; }
+	&[data-speed="37"] .ticker-content { animation-duration: 23s !important; }
+	&[data-speed="38"] .ticker-content { animation-duration: 22s !important; }
+	&[data-speed="39"] .ticker-content { animation-duration: 21s !important; }
+	&[data-speed="40"] .ticker-content { animation-duration: 20s !important; }
+	&[data-speed="41"] .ticker-content { animation-duration: 19s !important; }
+	&[data-speed="42"] .ticker-content { animation-duration: 18s !important; }
+	&[data-speed="43"] .ticker-content { animation-duration: 17s !important; }
+	&[data-speed="44"] .ticker-content { animation-duration: 16s !important; }
+	&[data-speed="45"] .ticker-content { animation-duration: 15s !important; }
+	&[data-speed="46"] .ticker-content { animation-duration: 14s !important; }
+	&[data-speed="47"] .ticker-content { animation-duration: 13s !important; }
+	&[data-speed="48"] .ticker-content { animation-duration: 12s !important; }
+	&[data-speed="49"] .ticker-content { animation-duration: 11s !important; }
+	&[data-speed="50"] .ticker-content { animation-duration: 10s !important; }
 }
 
 // Inspector controls styling
@@ -773,8 +866,7 @@ export default function save({ attributes }) {
 	.components-color-picker {
 		margin-bottom: 16px;
 	}
-}
-	]]></content>
+}]]></content>
   </file>
   <file name="view.js">
     <description>This file contains the view function for the block which is responsible for rendering interactive behaviors of the block on the front end. Ideally using the WordPress interactivity API.</description>
@@ -806,6 +898,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
 		// Calculate and apply animation duration based on speed
+		// Using the same formula: Math.max(10, 60 - speed)
 		const animationDuration = Math.max(10, 60 - speed) + 's';
 		tickerContent.style.animationDuration = animationDuration;
 		tickerContent.style.animationPlayState = 'running';

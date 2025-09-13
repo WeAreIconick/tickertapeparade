@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
 		}
 
 		// Calculate and apply animation duration based on speed
+		// Using the same formula: Math.max(10, 60 - speed)
 		const animationDuration = Math.max(10, 60 - speed) + 's';
 		tickerContent.style.animationDuration = animationDuration;
 		tickerContent.style.animationPlayState = 'running';

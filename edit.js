@@ -42,7 +42,7 @@ import { formatUppercase, formatBold } from '@wordpress/icons';
 /**
  * React hooks
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useState, useEffect, useMemo } from '@wordpress/element';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -84,11 +84,15 @@ export default function Edit({ attributes, setAttributes }) {
 			textTransform,
 			fontWeight,
 		},
-		className: 'wp-block-telex-ticker-tape-parade'
+		className: 'wp-block-telex-ticker-tape-parade',
+		'data-speed': speed
 	});
 
 	// Calculate animation duration based on speed (lower speed = longer duration)
-	const animationDuration = `${60 - speed}s`;
+	// Using the same formula as the frontend for consistency
+	const animationDuration = useMemo(() => {
+		return `${Math.max(10, 60 - speed)}s`;
+	}, [speed]);
 
 	const tickerStyle = {
 		animationDuration: animationDuration,
@@ -177,7 +181,7 @@ export default function Edit({ attributes, setAttributes }) {
 						min={5}
 						max={50}
 						step={1}
-						help={__('Higher values = faster scrolling', 'ticker-tape-parade-block-wp')}
+						help={__(`Higher values = faster scrolling (Current: ${animationDuration} per cycle)`, 'ticker-tape-parade-block-wp')}
 					/>
 					<ToggleControl
 						label={__('Pause on Hover', 'ticker-tape-parade-block-wp')}
@@ -234,7 +238,7 @@ export default function Edit({ attributes, setAttributes }) {
 					</div>
 				</div>
 				<div className="ticker-preview-note">
-					{__('Preview: Ticker scrolls from right to left', 'ticker-tape-parade-block-wp')}
+					{__(`Preview: Scrolls ${animationDuration} per cycle (Speed: ${speed})`, 'ticker-tape-parade-block-wp')}
 				</div>
 			</div>
 		</>
